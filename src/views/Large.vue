@@ -627,12 +627,12 @@
                   </thead>
 
                   <tbody>
-                    <tr :key="trend.Trends" v-for="(trend) in topTrends">
+                    <tr :key="trend.Trends" v-for="(trend) in interestTrends">
                       <td colspan="1">
                         <div>
                           <b-button
                             variant="link"
-                            v-on:click="LoadTrend(trend.Trends, trend.DT); currentBreed=trend.index "
+                            v-on:click="LoadTrend(trend.Trends, trend.DT); currentBreed=trend.Index "
                           >{{trend.Trends}}</b-button>
                         </div>
 
@@ -679,7 +679,7 @@
                             <b
                               v-else-if="trend.Operator == '-' "
                               style="color:red;"
-                            >{{trend.Operator}}{{ trend.Change.toLocaleString() }}</b>
+                            >{{ trend.Change.toLocaleString() }}</b>
                           </p>
 
                           <p style="color:Orange;" align="right">Total: {{ trend.TweetVol.toLocaleString() }}</p>
@@ -778,6 +778,7 @@ export default {
       topTrends: [],
       toptrackTrends: [],
       time: [],
+      interestTrends: [],
 
       breeds: [
         { name: "", key: "" }, // Initially empty values
@@ -866,21 +867,21 @@ export default {
       this.time = res.data.data[0].DT;
     });
 
-    // axios.get("https://www.mustavi.com/Trends/").then(res => {
-    //   this.topTrends = res.data.data.slice(0, 5);
+    axios.get("https://www.mustavi.com/interestingTrends/").then(res => {
+      this.interestTrends = res.data.data.slice(0, 5);
 
-    //   this.topic6 = res.data.data[0].Trends;
-    //   this.topic7 = res.data.data[1].Trends;
-    //   this.topic8 = res.data.data[2].Trends;
-    //   this.topic9 = res.data.data[3].Trends;
-    //   this.topic10 = res.data.data[4].Trends;
+      this.topic6 = res.data.data[0].Trends;
+      this.topic7 = res.data.data[1].Trends;
+      this.topic8 = res.data.data[2].Trends;
+      this.topic9 = res.data.data[3].Trends;
+      this.topic10 = res.data.data[4].Trends;
 
-    //   this.breeds[6].name = this.breeds[6].key = this.topic6;
-    //   this.breeds[7].name = this.breeds[7].key = this.topic7;
-    //   this.breeds[8].name = this.breeds[8].key = this.topic8;
-    //   this.breeds[9].name = this.breeds[9].key = this.topic9;
-    //   this.breeds[10].name = this.breeds[10].key = this.topic10;
-    // });
+      this.breeds[6].name = this.breeds[6].key = this.topic6;
+      this.breeds[7].name = this.breeds[7].key = this.topic7;
+      this.breeds[8].name = this.breeds[8].key = this.topic8;
+      this.breeds[9].name = this.breeds[9].key = this.topic9;
+      this.breeds[10].name = this.breeds[10].key = this.topic10;
+    });
 
     axios.get("https://www.mustavi.com/ActiveTracking/").then(res => {
       this.toptrackTrends = res.data.data.slice(0, 9);
